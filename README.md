@@ -1,2 +1,3 @@
 # KNote
-A notes app created in django
+A notes app created in django.
+
