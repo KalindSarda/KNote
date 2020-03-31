@@ -8,8 +8,62 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+function myFunction(id) {
+  
+  var title = document.getElementById('title'+id);
+  var date = document.getElementById('date'+id);
+  var details = document.getElementById('details'+id);
 
+  var ttext = (title.innerText || title.textContent);
+  var dtext = (date.innerText || date.textContent);
+  var detext = (details.innerText || details.textContent);
+
+  var edittile = document.getElementById('edittitle');
+  var editdate = document.getElementById('editdate');
+  var editdetails = document.getElementById('editdetails');
+  var editid = id;
+  
+  editdetails.value = detext;
+  editdate.value = dtext;
+  edittitle.setAttribute("value",ttext)
+  //editdate.setAttribute("value",dtext)
+  var action = "/edit/"+editid;
+
+  document.getElementById('editform').setAttribute("action",action)
+  document.getElementById('myModal').style.display='block';
+
+} 
+</script>
   <style>
+
+
+    /* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
 
     .card {
 
@@ -74,14 +128,15 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav nav-pills" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" data-toggle="pill" href="#home">Home</a>
+          <a class="nav-link " data-toggle="pill" href="#home">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="pill" href="#menu1">Saved Notes</a>
+          <a class="nav-link " data-toggle="pill" href="#menu1">Saved Notes</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="pill" href="#menu2">About</a>
         </li>
+        
       </ul>
       
     </div>
@@ -112,13 +167,13 @@
           </form>
 
           {% if messages %}
-  {% for message in messages %}
-  <hr>
-  <div class="alert alert-info col-sm-2">
-    <strong>{{message}}</strong>
-  </div>
-  {% endfor %}
-  {% endif %}
+            {% for message in messages %}
+                <hr>
+                  <div class="alert alert-info col-sm-2">
+                    <strong>{{message}}</strong>
+                  </div>
+              {% endfor %}
+          {% endif %}
   <br><br>
         </div>
         <div id="menu1" class="container tab-pane fade"><br>
@@ -126,18 +181,21 @@
 
       {% for i in list %}
       <div class="card">
-        <center><b>{{i.title}}</b></center>
+        <center><label for="title" id ="title{{i.id}}">{{i.title}}</label></center>
         <hr/>
-        {{i.date}}
+        <label for="date" id="date{{i.id}}">{{i.date}}</label>
+        
         <hr/>
-        {{i.details}}
+        <label for="details" id="details{{i.id}}">{{i.details}}</label>
         <br />
         <br />
-        <form action="/del/{{i.id}}" method="POST" style=" padding-right: 4%; padding-bottom: 3%;">
           {% csrf_token %}
-          <button value="remove" type="submit"  class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-trash"></span> &nbsp; remove</button>
-        </form>
+          <a href="/del/{{i.id}}" class="btn btn-danger" style="float: right;"><span class="glyphicon glyphicon-trash"></span> &nbsp; remove</a>
+        
+          <a onclick="myFunction({{i.id}} )" class="btn btn-info" style="float: right;margin-right: 10px;width:auto;"><span class="glyphicon glyphicon-pencil"></span> &nbsp; edit</a>
+          
 
+          <!--<button value="remove" onclick="" style="float: right;margin-right: 10px;width:auto;" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> &nbsp; edit</button>-->
       </div>
       {% endfor%}
     </div>
@@ -151,6 +209,7 @@
         <br><hr>
         <p>Created by - Kalind Sarda</p>
         </div>
+       
       </div>
     </div>
 
@@ -160,9 +219,41 @@
 
 </div>  
 
+<div class="modal animate" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+          <div class="modal-header">
+          
+        <form id="editform" method="post">
+          
+          {% csrf_token %}
+          
+            <label for="title">Title :</label>
+            <input id="edittitle" type="text" placeholder="Enter title" name="edittitle" required ><br>
+
+            <label for="date">Date :</label>
+            <input id="editdate" type="text" placeholder="Enter Date" name="editdate" required ><br>
+        
+            <label for="details">Details :</label><br>
+            <textarea id="editdetails" placeholder="Enter Details" name="editdetails" required></textarea>
+            
+       
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info">Update</button>
+          <button onclick="document.getElementById('myModal').style.display='none'" type="button" class="btn btn-danger">Close</button>
+        </div>  
+         </form>
+
+        
+      
+    </div>
+  </div>
+</div>
+
  
-  
+
 </body>
 </html>
-
-  
