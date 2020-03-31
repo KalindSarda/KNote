@@ -6,10 +6,11 @@ from django.conf.urls import url
 
 urlpatterns = [ 
     
-    path('', views.index, name="todo"), 
+    path('', views.index, name="note"), 
     
-    path('del/<item_id>', views.delete, name="del"), 
+	path('del/<item_id>', views.delete, name="del"),
+
+	path('edit/<item_id>', views.edit, name="edit"),
     
     path('admin/', admin.site.urls), 
 ]
-
