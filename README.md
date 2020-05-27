@@ -14,7 +14,6 @@ A notes app created in django. It can add,update and delete the notes as per the
 ## Snapshots
 
 ![Image of Knote](https://user-images.githubusercontent.com/47468438/82976308-5b445000-9ffc-11ea-97ba-84a291f440b4.PNG)
--Home page
 ![Image of Knote](https://user-images.githubusercontent.com/47468438/82976351-7a42e200-9ffc-11ea-892f-f12b33d41d90.PNG)
 ![Image of Knote](https://user-images.githubusercontent.com/47468438/82976360-8038c300-9ffc-11ea-91db-efdd1511d531.PNG)
 ![Image of Knote](https://user-images.githubusercontent.com/47468438/82976372-84fd7700-9ffc-11ea-8694-21c4e0deaf3e.PNG)
